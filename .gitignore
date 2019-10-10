@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.cache/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/misc.xml
+.idea/**/modules.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/*.iml
