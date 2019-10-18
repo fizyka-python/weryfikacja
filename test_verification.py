@@ -1,5 +1,6 @@
 # coding: utf8
 import sys
+import os
 
 from contextlib import contextmanager
 from io import StringIO
@@ -23,12 +24,8 @@ def capture_stdout():
 
 class TestPESEL(unittest.TestCase):
 
-    _months1 = ('styczeń', 'luty', 'marzec', 'kwiecień', 'maj', 'czerwiec',
-                'lipiec', 'sierpień', 'wrzesień', 'październik', 'listopad', 'grudzień')
-    _months2 = ('stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca',
+    _months = ('stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca',
                 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia')
-    _months3 = ('january', 'february', 'march', 'april', 'may', 'june',
-                'july', 'august', 'september', 'october', 'november', 'december')
 
     def do_test_pesel(self, pesel):
         with capture_stdout() as out:
@@ -43,11 +40,8 @@ class TestPESEL(unittest.TestCase):
             year += 1800
         else:
             year += 1900 + 100 * century
-        self.assertIn(birthday.lower(), (
-            f"{int(pesel[4:6])} {self._months1[(month%20)-1]} {year}",
-            f"{int(pesel[4:6])} {self._months2[(month%20)-1]} {year}",
-            f"{int(pesel[4:6])} {self._months3[(month%20)-1]} {year}"
-        ), "Funkcja nie wydrukowała daty urodzenia według wskazanego formatu")
+        self.assertEqual(birthday.lower(), f"{int(pesel[4:6])} {self._months[(month%20)-1]} {year}",
+                         "Funkcja nie wydrukowała daty urodzenia według wskazanego formatu")
 
     def test_pesel_poprawny_XX_wiek(self):
         self.do_test_pesel('90090515836')
@@ -69,6 +63,15 @@ class TestPESEL(unittest.TestCase):
     def test_pesel_zbyt_krótki(self):
         self.assertFalse(pesel_module.check_pesel('123456789'),
                          "Funkcja nie zwróciła False dla niepoprawnej i zbyt krótkiej wartości PESEL")
+
+    def test_pesele_w_pliku(self):
+        pesel_module.check_pesel_file('data.txt')
+        try:
+            with open('data.out') as result:
+                correct = ['5 września 1990', '21 marca 1887', '-', '10 czerwca 2001', '-']
+                self.assertEqual(correct, [line.rstrip() for line in result.readlines()])
+        except FileNotFoundError:
+            self.fail("Nie znaleziono pliku wynikowego")
 
 
 class TestCard(unittest.TestCase):

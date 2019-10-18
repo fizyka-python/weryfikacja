@@ -69,12 +69,31 @@ razie numer jest błędny.
 
 ## Zadanie
 
-Napisz funkcję o nazwie `check_pesel` weryfikującą numer PESEL oraz podający datę urodzenia osoby, która ten numer
-posiada.
+1. Napisz funkcję o nazwie `check_pesel` weryfikującą numer PESEL oraz podający datę urodzenia osoby, która ten numer
+   posiada.
 
-Funkcja ma przyjmować numer PESEL jako łańcuch tekstowy oraz zwracać wartość `True` bądź `False` w zależności od
-poprawności numeru PESEL. Ponadto funkcja ma drukować ekranie datę urodzenia w formacie *dzień miesiąc rok*,
-na przykład: `14 maja 1944`.
+   Funkcja ma przyjmować numer PESEL jako łańcuch tekstowy oraz zwracać wartość `True` bądź `False` w zależności od
+   poprawności numeru PESEL. Ponadto funkcja ma drukować ekranie datę urodzenia w formacie *dzień miesiąc rok*,
+   na przykład: `14 maja 1944`.
+
+2. Napisz funkcję `check_pesel_file`, która jako argument przyjmuje nazwę pliku i odczytuje numery PESEL z tego pliku
+   (po jednym w każdej linijce). Funkcja utworzyć plik o nazwie takiej samej nak nazwa oryginalnego pliku
+   z rozszerzeniem zmienionym na „`.out`”, zawierający w każdej linijce datę urodzenia danej osoby, albo znak „-”
+   w przypadku błędnego numeru PESEL.
+   
+   Dla przykładu, wywołanie `check_pesel_file("pesele.txt")` spowoduje utworzenie pliku `pesele.out`. Jeżeli plik
+   `pesele.txt` miał zawartość
+   
+       90090515836
+       87832165581
+
+   To `pesele.out` będzie następujący:
+    
+       5 maja 1990
+       -
+
+   Warto się zastanowić w jaki sposób wykorzystać funkcję z punktu pierwszego  (funkcja ta może przyjmować jako
+   opcjonalny argument plik, do którego zapisuje datę urodzenia zamiast drukować ją na ekranie).
 
 Każde odstępstwo od specyfikacji spowoduje niezaliczenie zadania.
 
